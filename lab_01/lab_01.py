@@ -1,25 +1,22 @@
-
-## List [Item1, Item2, Item3]
-## Item {"name":"Jon", "phone":"0631234567"}
-
-# already sorted list
 list = [
-    {"name":"Bob", "phone":"0631234567"},
-    {"name":"Emma", "phone":"0631234567"},
-    {"name":"Jon",  "phone":"0631234567"},
-    {"name":"Zak",  "phone":"0631234567"}
+    {"name":"Bob","surname":"Jobs", "phone":"0631234567", "email":"student1@gmail.com"},
+    {"name":"Emma","surname":"Parker", "phone":"0631234567", "email":"student2@gmail.com"},
+    {"name":"Jon","surname":"Watson",  "phone":"0631234567", "email":"student3@gmail.com"},
+    {"name":"Zak","surname":"Zaker",  "phone":"0631234567", "email":"student4@gmail.com"}
 ]
 
 def printAllList():
     for elem in list:
-        strForPrint = "Student name is " + elem["name"] + ",  Phone is " + elem["phone"]
+        strForPrint = "Student is " + elem["name"] + ' ' +  elem["surname"] + ",  Phone is " + elem["phone"] + ",  email is " + elem["email"]
         print(strForPrint)
     return
 
 def addNewElement():
     name = input("Pease enter student name: ")
+    surname = input("Pease enter student surname: ")
     phone = input("Please enter student phone: ")
-    newItem = {"name": name, "phone": phone}
+    email = input("Please enter student email: ")
+    newItem = {"name": name, "surname": surname, "phone": phone, "email":email}
     # find insert position
     insertPosition = 0
     for item in list:
@@ -41,15 +38,51 @@ def deleteElement():
     if deletePosition == -1:
         print("Element was not found")
     else:
-        print("Dele position " + str(deletePosition))
-        # list.pop(deletePosition)
+        print("Delete position " + str(deletePosition))
         del list[deletePosition]
     return
 
 
 def updateElement():
     name = input("Please enter name to be updated: ")
-    # implementation required
+    found = None
+    for item in list:
+        if item["name"] == name:
+            found = item
+            break
+
+    if not found:
+        print("Student not found")
+        return
+
+    print(f"Updating student: {found['name']} {found['surname']}")
+
+    new_name = input(f"Enter new name [{found['name']}]: ") or found['name']
+    new_surname = input(f"Enter new surname [{found['surname']}]: ") or found['surname']
+    new_phone = input(f"Enter new phone [{found['phone']}]: ") or found['phone']
+    new_email = input(f"Enter new email [{found['email']}]: ") or found['email']
+
+    # видаляємо старий запис
+    list.remove(found)
+
+    # створюємо оновлений
+    updatedItem = {"name": new_name, "surname": new_surname, "phone": new_phone, "email": new_email}
+
+    # вставляємо у правильне місце щоб список лишався відсортованим
+    insertPosition = 0
+    for item in list:
+        if new_name > item["name"]:
+            insertPosition += 1
+        else:
+            break
+    list.insert(insertPosition, updatedItem)
+
+    print("Student has been updated")
+    return
+
+
+
+
 
 def main():
     while True:
@@ -61,9 +94,12 @@ def main():
                 printAllList()
             case "U" | "u":
                 print("Existing element will be updated")
+                updateElement()
+                printAllList()
             case "D" | "d":
                 print("Element will be deleted")
                 deleteElement()
+                printAllList()
             case "P" | "p":
                 print("List will be printed")
                 printAllList()
