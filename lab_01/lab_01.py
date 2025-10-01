@@ -17,7 +17,7 @@ def addNewElement():
     phone = input("Please enter student phone: ")
     email = input("Please enter student email: ")
     newItem = {"name": name, "surname": surname, "phone": phone, "email":email}
-    # find insert position
+
     insertPosition = 0
     for item in list:
         if name > item["name"]:
@@ -44,41 +44,38 @@ def deleteElement():
 
 
 def updateElement():
-    name = input("Please enter name to be updated: ")
-    found = None
-    for item in list:
-        if item["name"] == name:
+   name = input("Please enter name to be updated: ")
+   found = None
+   for item in list:
+      if item["name"] == name:
             found = item
             break
 
-    if not found:
+   if not found:
         print("Student not found")
         return
 
-    print(f"Updating student: {found['name']} {found['surname']}")
+   print(f"Updating student: {found['name']} {found['surname']}")
 
-    new_name = input(f"Enter new name [{found['name']}]: ") or found['name']
-    new_surname = input(f"Enter new surname [{found['surname']}]: ") or found['surname']
-    new_phone = input(f"Enter new phone [{found['phone']}]: ") or found['phone']
-    new_email = input(f"Enter new email [{found['email']}]: ") or found['email']
+   new_name = input(f"Enter new name [{found['name']}]: ") or found['name']
+   new_surname = input(f"Enter new surname [{found['surname']}]: ") or found['surname']
+   new_phone = input(f"Enter new phone [{found['phone']}]: ") or found['phone']
+   new_email = input(f"Enter new email [{found['email']}]: ") or found['email']
+    
+   list.remove(found)
 
-    # видаляємо старий запис
-    list.remove(found)
+   updatedItem = {"name": new_name, "surname": new_surname, "phone": new_phone, "email": new_email}
 
-    # створюємо оновлений
-    updatedItem = {"name": new_name, "surname": new_surname, "phone": new_phone, "email": new_email}
-
-    # вставляємо у правильне місце щоб список лишався відсортованим
-    insertPosition = 0
-    for item in list:
-        if new_name > item["name"]:
+   insertPosition = 0
+   for item in list:
+      if new_name > item["name"]:
             insertPosition += 1
-        else:
+      else:
             break
-    list.insert(insertPosition, updatedItem)
+   list.insert(insertPosition, updatedItem)
 
-    print("Student has been updated")
-    return
+   print("Student has been updated")
+   return
 
 
 
