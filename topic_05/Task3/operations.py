@@ -9,14 +9,17 @@ def get_number():
 		print("Помилка: введіть числове значення!")
 		return None, None
 	
-def perform_operation(a, b):
+def perform_operation():
    while True:
+      a, b = get_number()
+      if a is None or b is None:
+         continue
       sign = input("Введіть дію (+ - * /) або 'exit' для виходу: ")
 
       if sign == "exit":
          print("Вихід з програми.")
          break
-
+      
       match sign:
          case "+":
             print(f"Результат: {plus(a, b)}")

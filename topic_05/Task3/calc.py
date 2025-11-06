@@ -1,6 +1,7 @@
-from operations import perform_operation, get_number
+from operations import perform_operation
 
 def main():
-	a, b = get_number()
-	perform_operation(a,b)
-main()
+	perform_operation()
+
+if __name__ == "__main__":
+	main()
